@@ -5,17 +5,12 @@ MARE vs Baseline Performance Comparison
 Demonstrates token efficiency and performance improvements of MARE Protocol
 compared to traditional multi-agent approaches.
 """
-import sys
 import time
 import json
 import statistics
-from pathlib import Path
 from typing import Dict, List, Any
 from dataclasses import dataclass
 from datetime import datetime
-
-# Add src to path for imports
-sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 from mare import MARESystem
 

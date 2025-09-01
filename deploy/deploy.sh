@@ -92,7 +92,8 @@ build_image() {
         --build-arg BUILD_DATE="$(date -u +'%Y-%m-%dT%H:%M:%SZ')" \
         --tag "mare-protocol:$MARE_VERSION" \
         --tag "mare-protocol:latest" \
-        .
+        -f Dockerfile \
+        ..
     
     log_success "Docker image built successfully"
 }
@@ -214,9 +215,9 @@ show_deployment_summary() {
     echo "  • Grafana:        http://localhost:3000 (admin/mare2025)"
     echo ""
     echo "Available Commands:"
-    echo "  • Interactive Demo:       docker-compose exec mare-system python3 demo_mare.py"
-    echo "  • Validation Suite:       docker-compose exec mare-system python3 mare_validation_suite.py"
-    echo "  • Benchmark Comparison:   docker-compose exec mare-system python3 mare_benchmark_comparison.py"
+    echo "  • Interactive Demo:       docker-compose exec mare-system python3 -m mare.demo"
+    echo "  • Validation Suite:       docker-compose exec mare-system python3 -m mare.validation_suite"
+    echo "  • Benchmark Comparison:   docker-compose exec mare-system python3 -m mare.benchmark_comparison"
     echo "  • View Logs:              docker-compose logs -f mare-system"
     echo "  • System Health:          docker-compose exec mare-system python3 -c \"import sys; sys.path.insert(0, '/app/src'); from mare import MARESystem; s=MARESystem(); print(s.get_system_health()); s.shutdown()\""
     echo ""

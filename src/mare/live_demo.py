@@ -4,15 +4,10 @@ MARE Live Demo Interface
 
 Interactive web interface for demonstrating MARE Protocol capabilities.
 """
-import sys
 import json
 import time
-from pathlib import Path
 from typing import Dict, List, Any
 from datetime import datetime
-
-# Add src to path for imports
-sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 from mare import MARESystem, TaskStatus
 

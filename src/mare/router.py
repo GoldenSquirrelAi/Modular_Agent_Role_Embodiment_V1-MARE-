@@ -24,7 +24,9 @@ class REPDefinition:
     archetype: str
 
 class MARERouter:
-    def __init__(self, rep_directory: str = "."):
+    def __init__(self, rep_directory: Optional[str] = None):
+        if rep_directory is None:
+            rep_directory = Path(__file__).resolve().parents[2] / "reps"
         self.rep_directory = Path(rep_directory)
         self.reps = self._load_reps()
         self.routing_rules = self._build_routing_rules()

@@ -22,17 +22,12 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean
 
 # Copy requirements and install Python dependencies
-COPY requirements.txt .
+COPY deploy/requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY src/ src/
-COPY *.json ./
-COPY demo_mare.py .
-COPY mare_live_demo.py .
-COPY mare_web_demo.py .
-COPY mare_validation_suite.py .
-COPY mare_benchmark_comparison.py .
+COPY reps/ reps/
 
 # Create directories for data and logs
 RUN mkdir -p /app/data /app/logs && \
@@ -49,4 +44,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
 EXPOSE 8080
 
 # Default command - run web demo
-CMD ["python3", "mare_web_demo.py"]
+CMD ["python3", "-m", "mare.web_demo"]
