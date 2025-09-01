@@ -4,18 +4,13 @@ MARE Web Demo Server
 
 Simple HTTP server for demonstrating MARE Protocol capabilities via web interface.
 """
-import sys
 import json
 import time
-from pathlib import Path
 from typing import Dict, Any
 from datetime import datetime
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import urllib.parse
 import logging
-
-# Add src to path for imports
-sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 from mare import MARESystem, TaskStatus
 

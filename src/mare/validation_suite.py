@@ -5,17 +5,12 @@ MARE Validation Suite
 Comprehensive test scenarios to validate token efficiency, behavioral consistency,
 and performance claims of the MARE Protocol implementation.
 """
-import sys
 import time
 import json
 import statistics
-from pathlib import Path
 from typing import Dict, List, Tuple, Any
 from dataclasses import dataclass
 from datetime import datetime
-
-# Add src to path for imports
-sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 from mare import MARESystem, TaskStatus
 

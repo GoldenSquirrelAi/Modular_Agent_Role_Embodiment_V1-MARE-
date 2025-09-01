@@ -3,7 +3,9 @@ version: '3.8'
 
 services:
   mare-system:
-    build: .
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
     image: mare-protocol:latest
     container_name: mare-system
     hostname: mare-system

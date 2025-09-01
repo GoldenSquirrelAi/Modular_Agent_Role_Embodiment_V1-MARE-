@@ -4,8 +4,7 @@ MARE Bootstrap Executor - Orchestrates the self-construction process
 """
 import json
 import sys
-from pathlib import Path
-from router import MARERouter, Task
+from mare.router import MARERouter, Task
 
 class BootstrapExecutor:
     def __init__(self):

@@ -4,12 +4,8 @@ MARE System Demo
 
 Demonstrates the MARE Protocol with various task types and REP embodiments.
 """
-import sys
 import time
-from pathlib import Path
-
-# Add src to path for imports
-sys.path.insert(0, str(Path(__file__).parent / "src"))
+ 
 
 from mare import MARESystem, create_mare_system
 
