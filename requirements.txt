@@ -1,0 +1,15 @@
+# MARE System Dependencies
+
+# Core dependencies
+pydantic>=2.0.0
+pytest>=7.0.0
+
+# Development dependencies
+pytest-cov>=4.0.0
+black>=22.0.0
+flake8>=5.0.0
+
+# Optional dependencies for enhanced features
+fastapi>=0.100.0  # For REST API interface
+uvicorn>=0.20.0   # For serving API
+redis>=4.0.0      # For caching (optional)

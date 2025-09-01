@@ -1,0 +1,124 @@
+# MARE System Docker Compose Configuration
+version: '3.8'
+
+services:
+  mare-system:
+    build: .
+    image: mare-protocol:latest
+    container_name: mare-system
+    hostname: mare-system
+    restart: unless-stopped
+    
+    environment:
+      - MARE_ENV=production
+      - MARE_LOG_LEVEL=INFO
+      - MARE_DB_PATH=/app/data/mare_reps.db
+      - PYTHONPATH=/app/src
+    
+    volumes:
+      - mare-data:/app/data
+      - mare-logs:/app/logs
+      - ./config:/app/config:ro
+    
+    ports:
+      - "8085:8080"
+    
+    networks:
+      - mare-network
+    
+    labels:
+      - "mare.service=core"
+      - "mare.version=1.0.0"
+    
+    logging:
+      driver: json-file
+      options:
+        max-size: "100m"
+        max-file: "5"
+    
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+
+  mare-monitor:
+    image: prom/prometheus:latest
+    container_name: mare-monitor
+    hostname: mare-monitor
+    restart: unless-stopped
+    
+    ports:
+      - "9090:9090"
+    
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--storage.tsdb.retention.time=30d'
+      - '--web.enable-lifecycle'
+    
+    networks:
+      - mare-network
+    
+    labels:
+      - "mare.service=monitoring"
+
+  mare-grafana:
+    image: grafana/grafana:latest
+    container_name: mare-grafana
+    hostname: mare-grafana
+    restart: unless-stopped
+    
+    ports:
+      - "3005:3000"
+    
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./monitoring/grafana:/etc/grafana/provisioning:ro
+    
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=mare2025
+      - GF_INSTALL_PLUGINS=grafana-clock-panel
+    
+    networks:
+      - mare-network
+    
+    labels:
+      - "mare.service=visualization"
+
+volumes:
+  mare-data:
+    driver: local
+    labels:
+      - "mare.storage=database"
+  
+  mare-logs:
+    driver: local
+    labels:
+      - "mare.storage=logs"
+  
+  prometheus-data:
+    driver: local
+    labels:
+      - "mare.storage=metrics"
+  
+  grafana-data:
+    driver: local
+    labels:
+      - "mare.storage=dashboards"
+
+networks:
+  mare-network:
+    driver: bridge
+    name: mare-network
+    labels:
+      - "mare.network=internal"
